@@ -1,0 +1,130 @@
+process_analysis_task:
+  description: >
+    Analyze the following manual, repetitive workplace task in depth:
+
+    TASK DESCRIPTION:
+    {task_description}
+
+    TEAM CONTEXT:
+    {team_context}
+
+    CONSTRAINTS:
+    {constraints}
+
+    Current year: {current_year}
+
+    Your analysis must cover ALL of the following:
+
+    1. PROCESS DECOMPOSITION
+       Break the task into every discrete step (aim for 8-15 granular steps).
+       For each step document:
+       - What is done manually
+       - How long it typically takes
+       - Who does it
+       - What inputs it needs and what outputs it produces
+       - How often errors occur and what their impact is
+
+    2. AUTOMATION OPPORTUNITY SCORING
+       Score each step on three axes (1-5 scale):
+       - Automation Feasibility: how technically straightforward to automate
+       - Business Impact: time saved × error reduction × strategic value
+       - Implementation Risk: data quality issues, exceptions, compliance
+       Compute an Opportunity Score = (Feasibility × Impact) / Risk
+       Rank and categorise steps as: High Priority / Medium Priority / Low Priority / Do Not Automate
+
+    3. TOOL LANDSCAPE EVALUATION
+       For the high and medium priority steps, research and evaluate specific tools.
+       Reference the knowledge base files in the knowledge/ directory for tool details.
+       For each automation opportunity, compare at least 2-3 tool options covering:
+       - Tool name and type (RPA / workflow automation / AI / API integration / script)
+       - What it automates in this specific context
+       - Pricing model and estimated monthly cost
+       - Integration with existing systems mentioned in team context
+       - Implementation complexity (1-5)
+       - Vendor maturity and support
+
+    4. QUICK WIN IDENTIFICATION
+       Identify 1-2 steps that could be automated within 1-2 weeks with minimal
+       risk, using tools the team already has or free tier tools. These are the
+       "show-stopper wins" that build momentum and stakeholder buy-in.
+
+    5. DATA & DEPENDENCY MAP
+       List all data sources, systems, file formats, and APIs involved.
+       Flag any data quality issues, access permission barriers, or compliance
+       considerations that could block automation.
+
+  expected_output: >
+    A structured Process Analysis Report with five clearly labelled sections
+    matching the five areas above. Present the process decomposition as a
+    numbered list. Present the opportunity scoring as a table with columns:
+    Step | Feasibility | Impact | Risk | Score | Priority.
+    Present tool evaluations as comparison tables per automation opportunity.
+    End with a clearly highlighted "Quick Wins" box and a "Blockers to Resolve"
+    list. The report should be detailed enough that the Automation Architect
+    can design the solution without needing any clarification.
+  agent: process_analyst
+
+automation_blueprint_task:
+  description: >
+    Using the Process Analysis Report produced by the Process Analyst, design
+    a complete Automation Blueprint for:
+
+    TASK DESCRIPTION:
+    {task_description}
+
+    CONSTRAINTS TO HONOUR:
+    {constraints}
+
+    Your blueprint must include all of the following sections:
+
+    1. EXECUTIVE SUMMARY (1 page)
+       - Current state: time spent, error rate, team pain
+       - Future state: what life looks like after automation
+       - Bottom-line ROI headline (e.g., "saves 18 hours/week = €28,000/year")
+       - Recommended approach in 2-3 sentences
+
+    2. RECOMMENDED AUTOMATION STACK
+       For each automation layer (data ingestion, processing, decision logic,
+       output generation, notifications/distribution), specify:
+       - Exact tool chosen and why (reference the analysis)
+       - How it integrates with existing systems
+       - Fallback / manual override mechanism
+       Include a simple architecture diagram in ASCII or text format showing
+       how data flows through the automated system end-to-end.
+
+    3. PHASED IMPLEMENTATION ROADMAP
+       Phase 1 – Quick Win (Week 1-2):
+         What to automate, deliverable, success metric, who does it
+       Phase 2 – Core Automation (Week 3-8):
+         Full automation of high-priority steps, integration work, testing
+       Phase 3 – Optimisation (Month 3-6):
+         AI/ML enhancements, exception handling, monitoring, self-healing
+       For each phase: specific tasks, estimated effort (person-days), owner role
+
+    4. ROI CALCULATION
+       - Hours saved per week/month (broken down by step)
+       - Estimated cost of implementation (tool costs + engineering time)
+       - Estimated monthly running cost
+       - Payback period in months
+       - 12-month net saving
+
+    5. TOP RISKS & MITIGATIONS
+       List the 4 most likely risks (technical, organisational, data quality, compliance)
+       For each: probability (H/M/L), impact (H/M/L), mitigation strategy, owner
+
+    6. NEXT STEPS (THIS WEEK)
+       3-5 concrete actions the team should take in the next 5 working days
+       to start the automation — specific enough to assign to a person today.
+
+  expected_output: >
+    A polished Automation Blueprint Report in markdown format. It must have
+    clear section headers matching the 6 sections above. The tone is direct
+    and business-ready — suitable to present to a manager or client.
+    Every tool choice must be justified in one sentence. The ROI table must
+    show actual numbers, not placeholders. The next steps must be concrete
+    action items, not vague suggestions. The report should end with a
+    one-line motivational close ("Start with X this week — it proves the
+    concept and pays for itself in Y weeks.").
+  agent: automation_architect
+  context:
+    - process_analysis_task

@@ -1,0 +1,24 @@
+[project]
+name = "workplace-automation-crew"
+version = "0.1.0"
+description = "CrewAI crew that analyses repetitive workplace tasks and produces a complete AI-powered automation blueprint with phased implementation roadmap and ROI calculation"
+authors = [{ name = "Karan Handa", email = "karan@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[tools]==1.10.1",
+    "python-dotenv>=1.0.0",
+]
+
+[project.scripts]
+workplace-automation-crew = "workplace_automation_crew.main:run"
+run_crew = "workplace_automation_crew.main:run"
+train = "workplace_automation_crew.main:train"
+replay = "workplace_automation_crew.main:replay"
+test = "workplace_automation_crew.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
